@@ -12,6 +12,7 @@ module.exports = {
         "darkMobileImage": "url('./assets/images/bg-mobile-dark.jpg')",
         "lightMobileImage": "url('./assets/images/bg-mobile-dark.jpg')",
         "checkImage": "url('./assets/images/icon-check.svg')",
+        "checkBoxBackGroundColor" : "linear-gradient(#57ddff, #c058f3)"
       },
       colors: {
         "veryLightGray": "hsl(0, 0%, 98%)",
@@ -21,7 +22,8 @@ module.exports = {
         "veryDarkGrayishBlue": "hsl(235, 19%, 35%)",
         "checkBox1BackgroundColor": "hsl(192, 100%, 67%)",
         "checkBox2BackgroundColor": "hsl(280, 87%, 65%)",
-        "checkBoxBorderColor": "#457b9d"
+        "checkBoxBorderColor": "#457b9d",
+        "brightBlue" : "#3a7bfd"
       }
     },
   },

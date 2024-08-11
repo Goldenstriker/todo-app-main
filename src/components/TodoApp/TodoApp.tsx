@@ -1,29 +1,94 @@
+import { useState } from "react";
+import { items } from "../../assets/data/dummydata";
 import Checkbox from "../Checkbox/Checkbox";
 import TopBar from "./TopBar";
 
-const items = [{ "id": 1, "todo": "Do something nice for someone I care about", "completed": true, "userId": 26 }, { "id": 2, "todo": "Memorize the fifty states and their capitals", "completed": false, "userId": 48 }, { "id": 3, "todo": "Watch a classic movie", "completed": false, "userId": 4 }, { "id": 4, "todo": "Contribute code or a monetary donation to an open-source software project", "completed": false, "userId": 48 }, { "id": 5, "todo": "Solve a Rubik's cube", "completed": false, "userId": 31 }, { "id": 6, "todo": "Bake pastries for me and neighbor", "completed": false, "userId": 39 }, { "id": 7, "todo": "Go see a Broadway production", "completed": false, "userId": 32 }, { "id": 8, "todo": "Write a thank you letter to an influential person in my life", "completed": true, "userId": 13 }, { "id": 9, "todo": "Invite some friends over for a game night", "completed": false, "userId": 47 }, { "id": 10, "todo": "Have a football scrimmage with some friends", "completed": false, "userId": 19 }, { "id": 11, "todo": "Text a friend I haven't talked to in a long time", "completed": false, "userId": 39 }, { "id": 12, "todo": "Organize pantry", "completed": true, "userId": 39 }, { "id": 13, "todo": "Buy a new house decoration", "completed": false, "userId": 16 }, { "id": 14, "todo": "Plan a vacation I've always wanted to take", "completed": false, "userId": 28 }, { "id": 15, "todo": "Clean out car", "completed": false, "userId": 33 }, { "id": 16, "todo": "Draw and color a Mandala", "completed": true, "userId": 24 }, { "id": 17, "todo": "Create a cookbook with favorite recipes", "completed": false, "userId": 1 }, { "id": 18, "todo": "Bake a pie with some friends", "completed": false, "userId": 1 }, { "id": 19, "todo": "Create a compost pile", "completed": true, "userId": 5 }, { "id": 20, "todo": "Take a hike at a local park", "completed": true, "userId": 43 }, { "id": 21, "todo": "Take a class at local community center that interests you", "completed": false, "userId": 22 }, { "id": 22, "todo": "Research a topic interested in", "completed": false, "userId": 4 }, { "id": 23, "todo": "Plan a trip to another country", "completed": true, "userId": 37 }, { "id": 24, "todo": "Improve touch typing", "completed": false, "userId": 45 }, { "id": 25, "todo": "Learn Express.js", "completed": false, "userId": 49 }, { "id": 26, "todo": "Learn calligraphy", "completed": false, "userId": 50 }, { "id": 27, "todo": "Have a photo session with some friends", "completed": false, "userId": 14 }, { "id": 28, "todo": "Go to the gym", "completed": false, "userId": 15 }, { "id": 29, "todo": "Make own LEGO creation", "completed": false, "userId": 30 }, { "id": 30, "todo": "Take cat on a walk", "completed": false, "userId": 15 }];
+enum TodoStatusFilter {
+  All = 1,
+  Completed = 2,
+  Active = 3,
+}
 
 const TodoApp: React.FC = () => {
-    return (<div className="absolute left-[31%] right-0 top-[10%] w-[38%] border-none shadow-xl z-20 rounded-b-md bg-transparent">
+  const [todos, setTodos] = useState(items);
+  const [todosFilter, setTodoFilter] = useState<TodoStatusFilter>(
+    TodoStatusFilter.All
+  );
 
-        <TopBar />
+  const todoFilterOptions = [
+    TodoStatusFilter.All,
+    TodoStatusFilter.Active,
+    TodoStatusFilter.Completed,
+  ];
 
-        <div className="bg-white rounded-t-md border-none overflow-hidden">
-            <div className="h-[300px] overflow-y-auto custom-scrollbar">
-                {(items.map(item => (
-                    <div key={item.id} className="w-full h-fit border-b-[1px] p-[10px] flex flex-row gap-3 text-center last:border-b-0">
-                        <Checkbox checked={item.completed} />
-                        {item.todo}
-                    </div>
-                )))}
+  const todoItems =
+    todosFilter === TodoStatusFilter.All
+      ? todos
+      : todos.filter(
+          (x) =>
+            (x.completed === true &&
+              todosFilter === TodoStatusFilter.Completed) ||
+            (x.completed === false && todosFilter === TodoStatusFilter.Active)
+        );
+  return (
+    <div className="absolute left-[31%] right-0 top-[10%] w-[38%] border-none shadow-xl z-20 rounded-b-md bg-transparent">
+      <TopBar />
+
+      <div className="bg-white rounded-t-md border-none overflow-hidden">
+        <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          {todoItems.length > 0 ? (
+            todoItems.map((item) => (
+              <div
+                key={item.id}
+                className="w-full h-fit border-b-[1px] p-[10px] flex flex-row gap-3 text-center last:border-b-0"
+              >
+                <Checkbox
+                  checked={item.completed}
+                  onChanged={(ev, value) => {
+                    let todoIndex = todos.findIndex((x) => x.id == item.id);
+                    todos[todoIndex].completed = !!value;
+                    setTodos([...todos]);
+                  }}
+                />
+                <span className={`${item.completed ? "line-through" : ""}`}>
+                  {item.todo}
+                </span>
+              </div>
+            ))
+          ) : (
+            <div className="flex h-full justify-center">
+              <span className="content-center">No todo items left</span>
             </div>
+          )}
         </div>
+      </div>
 
-        <div className="w-full h-[15px] py-5 bg-white rounded-b-md flex flex-row border-t-[1px]">
-            <Checkbox checked={true} />Horizontal Items
+      <div className="w-full h-[30px] py-5 px-1 bg-white rounded-b-md flex flex-row border-t-[1px] justify-between items-center">
+        <div>
+          {todos.filter((x) => x.completed === false).length} items left
         </div>
-
-    </div>);
-}
+        <div className="flex flex-row">
+          {todoFilterOptions.map((x) => (
+            <a
+              href="#"
+              className={`mx-2 ${todosFilter === x && "text-brightBlue"}`}
+              onClick={() => setTodoFilter(x)}
+            >
+              {TodoStatusFilter[x]}
+            </a>
+          ))}
+        </div>
+        <div>
+          <a
+            href="#"
+            onClick={() => setTodos(todos.filter((x) => !x.completed))}
+          >
+            Clear Completed
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default TodoApp;
