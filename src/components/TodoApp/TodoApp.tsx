@@ -31,7 +31,7 @@ const TodoApp: React.FC = () => {
             (x.completed === false && todosFilter === TodoStatusFilter.Active)
         );
   return (
-    <div className="absolute left-[31%] right-0 top-[10%] w-[38%] border-none shadow-xl z-20 rounded-b-md bg-transparent">
+    <div className="border-none shadow-xl z-20 rounded-b-md bg-transparent">
       <TopBar />
 
       <div className="bg-white rounded-t-md border-none overflow-hidden">
@@ -40,19 +40,30 @@ const TodoApp: React.FC = () => {
             todoItems.map((item) => (
               <div
                 key={item.id}
-                className="w-full h-fit border-b-[1px] p-[10px] flex flex-row gap-3 text-center last:border-b-0"
+                className="group w-full h-fit border-b-[1px] p-[10px] flex flex-row gap-3 text-center last:border-b-0"
               >
                 <Checkbox
                   checked={item.completed}
                   onChanged={(ev, value) => {
-                    let todoIndex = todos.findIndex((x) => x.id == item.id);
-                    todos[todoIndex].completed = !!value;
-                    setTodos([...todos]);
+                    let todosCopy = todos.slice();
+                    let todoIndex = todosCopy.findIndex(
+                      (x) => x.id === item.id
+                    );
+                    todosCopy[todoIndex].completed = !!value;
+                    setTodos([...todosCopy]);
                   }}
                 />
                 <span className={`${item.completed ? "line-through" : ""}`}>
                   {item.todo}
                 </span>
+                <img
+                  className="group-hover:block h-[20px] hidden"
+                  src="../../../icon-cross.svg"
+                  onClick={() => {
+                    let todosCopy = todos.slice();
+                    setTodos([...todosCopy.filter((x) => x.id !== item.id)]);
+                  }}
+                />
               </div>
             ))
           ) : (

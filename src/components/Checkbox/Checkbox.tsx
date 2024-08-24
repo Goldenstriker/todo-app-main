@@ -19,7 +19,7 @@ const Checkbox: React.FC<CheckBoxProps> = (props: CheckBoxProps) => {
 
   return (
     <div
-      className={`w-[20px] h-[20px] rounded-full bg-gray border-[1px]   ${
+      className={`w-[20px] h-[20px] rounded-full bg-gray border-[1px] shrink-0   ${
         checked ? "bg-checkBoxBackGroundColor" : "border-checkBoxBorderColor"
       }`}
       onClick={onChanged}
