@@ -14,7 +14,7 @@ const Checkbox: React.FC<CheckBoxProps> = (props: CheckBoxProps) => {
       setChecked(!checked);
       props.onChanged && props.onChanged(ev, !checked);
     },
-    [checked]
+    [checked, props.onChanged]
   );
 
   return (

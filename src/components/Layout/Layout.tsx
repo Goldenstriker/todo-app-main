@@ -1,5 +1,6 @@
 import React from "react";
 import { Theme, useTheme } from "../../context/ThemeContext";
+import { motion } from "framer-motion";
 
 interface ILayoutProps {
   children?: React.ReactElement;
@@ -9,7 +10,13 @@ const Layout: React.FC<ILayoutProps> = ({ children }: ILayoutProps) => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="container max-w-full h-screen flex flex-col">
+    <div
+      className={`container max-w-full h-screen flex flex-col ${
+        theme === Theme.light
+          ? "bg-lightBackgroundColor"
+          : "bg-darkBackgroundColor"
+      }`}
+    >
       <div
         className={`border-none flex h-[30%] bg-no-repeat bg-cover justify-center ${
           theme === Theme.light ? "bg-lightDeskTopImage" : "bg-darkDeskTopImage"
@@ -20,15 +27,17 @@ const Layout: React.FC<ILayoutProps> = ({ children }: ILayoutProps) => {
             <h1 className="text-white text-[2rem] tracking-[7px] font-bold">
               TODO
             </h1>
-            <img
-              className="h-[25px]"
-              src={
-                theme === Theme.light
-                  ? "../../../icon-moon.svg"
-                  : "../../../icon-sun.svg"
-              }
-              onClick={toggleTheme}
-            />
+            <motion.div whileHover={{ scale: 1.2 }}>
+              <img
+                className="h-[25px]"
+                src={
+                  theme === Theme.light
+                    ? "../../../icon-moon.svg"
+                    : "../../../icon-sun.svg"
+                }
+                onClick={toggleTheme}
+              />
+            </motion.div>
           </div>
           {children}
         </div>
