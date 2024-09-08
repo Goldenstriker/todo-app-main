@@ -1,4 +1,5 @@
-import { Theme, useTheme } from "../../context/ThemeContext";
+import { uid } from "uid";
+import { Theme, useTheme } from "../../context/ThemeContext/ThemeContext";
 import { TodoItem } from "../../models/TodoItem";
 import Checkbox from "../Checkbox/Checkbox";
 
@@ -28,7 +29,7 @@ const TopBar: React.FC<TopBarProps> = ({ setTodos, todos }) => {
             if (ev.key === "Enter") {
               let todoCopy = [...todos];
               todoCopy.push({
-                id: 100,
+                id: uid(),
                 todo: ev.currentTarget.value,
                 completed: false,
               });

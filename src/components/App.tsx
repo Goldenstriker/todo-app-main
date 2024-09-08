@@ -1,5 +1,5 @@
 import React from "react";
-import { ThemeProvider } from "../context/ThemeContext";
+import { ThemeProvider } from "../context/ThemeContext/ThemeContext";
 import Layout from "./Layout/Layout";
 import TodoApp from "./TodoApp/TodoApp";
 

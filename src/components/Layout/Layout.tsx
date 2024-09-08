@@ -1,5 +1,5 @@
 import React from "react";
-import { Theme, useTheme } from "../../context/ThemeContext";
+import { Theme, useTheme } from "../../context/ThemeContext/ThemeContext";
 import { motion } from "framer-motion";
 
 interface ILayoutProps {

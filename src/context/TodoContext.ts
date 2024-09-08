@@ -1,10 +1,10 @@
 import { createContext } from "react";
 import { TodoItem } from "../models/TodoItem";
 
-export interface TodoContextState {
+export interface TodoContextType {
   todoItems: TodoItem[];
   setTodoItems: () => void;
 }
 
-const TodoContext = createContext<TodoContextState>({} as TodoContextState);
+const TodoContext = createContext<TodoContextType>({} as TodoContextType);
 export default TodoContext;

@@ -5,7 +5,7 @@ import TopBar from "./TopBar";
 import { TodoStatusFilter } from "../../models/TodoStatusFilter";
 import { Reorder, AnimatePresence, motion } from "framer-motion";
 import { TodoItem } from "../../models/TodoItem";
-import { Theme, useTheme } from "../../context/ThemeContext";
+import { Theme, useTheme } from "../../context/ThemeContext/ThemeContext";
 
 const TodoApp: React.FC = () => {
   const [todos, setTodos] = useState(items);
@@ -57,7 +57,7 @@ const TodoApp: React.FC = () => {
                   <Reorder.Item
                     value={item}
                     key={item.id}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0 }}
                     animate={{
                       opacity: 1,
                       transition: { duration: 0.15 },
