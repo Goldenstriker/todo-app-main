@@ -1,6 +1,8 @@
 import React from "react";
 import { Theme, useTheme } from "../../context/ThemeContext/ThemeContext";
 import { motion } from "framer-motion";
+import moonImage from "../../assets/images/icon-moon.svg";
+import sunImage from "../../assets/images/icon-sun.svg";
 
 interface ILayoutProps {
   children?: React.ReactElement;
@@ -30,11 +32,7 @@ const Layout: React.FC<ILayoutProps> = ({ children }: ILayoutProps) => {
             <motion.div whileHover={{ scale: 1.2 }}>
               <img
                 className="h-[25px]"
-                src={
-                  theme === Theme.light
-                    ? "../../../icon-moon.svg"
-                    : "../../../icon-sun.svg"
-                }
+                src={theme === Theme.light ? moonImage : sunImage}
                 onClick={toggleTheme}
               />
             </motion.div>

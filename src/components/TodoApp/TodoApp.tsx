@@ -6,6 +6,7 @@ import { TodoStatusFilter } from "../../models/TodoStatusFilter";
 import { Reorder, AnimatePresence, motion } from "framer-motion";
 import { TodoItem } from "../../models/TodoItem";
 import { Theme, useTheme } from "../../context/ThemeContext/ThemeContext";
+import crossImage from "../../assets/images/icon-cross.svg";
 
 const TodoApp: React.FC = () => {
   const [todos, setTodos] = useState(items);
@@ -90,7 +91,7 @@ const TodoApp: React.FC = () => {
                       <motion.div whileHover={{ scale: 1.2 }}>
                         <img
                           className="group-hover:block h-[15px] hidden cursor-pointer"
-                          src="../../../icon-cross.svg"
+                          src={crossImage}
                           onClick={() => {
                             let todosCopy = [...todos];
                             setTodos([
